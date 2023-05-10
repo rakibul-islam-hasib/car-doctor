@@ -14,10 +14,10 @@ const Banner = () => {
                 className="h-[70vh] items-center text-white flex">
                 <div className="w-[50%] ml-[80PX]    ">
                     <h1 className='text-5xl font-bold'>Affordable Price For Car Servicing</h1>
-                    <p>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
-                    <div className="">
+                    <p className='mt-5'>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
+                    <div className="flex gap-4 mt-9">
                         <button className='bg-primary px-5 py-3 font-bold rounded-lg'>Discover More</button>
-                        <button className='border-gray-300 border text-gray-300 px-5 py-3 font-bold rounded-lg'>Latest Project</button>
+                        <button className='border-gray-300 hover:border-primary hover:text-primary duration-300 border text-gray-300 px-5 py-3 font-bold rounded-lg'>Latest Project</button>
                     </div>
                 </div>
             </div>
