@@ -15,21 +15,25 @@ const Services = () => {
                 <p className='text-6xl font-bold  my-4'>Our Service Area</p>
                 <p className='text-secondary my-4 capitalize'>the majority have suffered alteration in some form, by injected humour, or randomised <br /> words which don't look even slightly believable. </p>
             </div>
-            <div className="">
+            <div className="grid mx-auto md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {
-                    services.map(item => <div key={item._id} className="card w-96 bg-base-100 shadow-xl">
+                    services.map(item => <div key={item._id} className="card w- bg-base-100 shadow-xl">
                         <figure className="px-10 pt-10">
-                            <img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" className="rounded-xl" />
+                            <img src={item.img} alt="Shoes" className="rounded-xl h-[200px]" />
                         </figure>
                         <div className="card-body items-center text-center">
-                            <h2 className="card-title">Shoes!</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
+                            <h2 className="card-title">{item.title}</h2>
+                            <p>Price : {item.price}$</p>
                             <div className="card-actions">
                                 <button className="btn btn-primary">Buy Now</button>
                             </div>
                         </div>
                     </div>)
                 }
+            </div>
+            {/* Outline button */}
+            <div className="text-center my-20">
+                <button className='px-4 py-2 border-2 font-bold hover:bg-primary  hover:text-white duration-200  border-primary rounded-lg '>More Services</button>
             </div>
         </div>
     );

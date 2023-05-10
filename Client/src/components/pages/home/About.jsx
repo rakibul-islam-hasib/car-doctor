@@ -3,10 +3,10 @@ import parts from '../../../assets/images/about_us/parts.jpg';
 import person from '../../../assets/images/about_us/person.jpg'; 
 const About = () => {
     return (
-        <div className='flex my-14 gap-20 justify-center'>
+        <div className='flex flex-col md:flex-row  items-center md:text-left text-center my-14 gap-20 justify-center'>
             <div className="w-1/3  mt-6 relative">
                 <img src={person} className='' alt="" />
-                <img src={parts} className='absolute w-[70%] border-8 border-white -right-10 bottom-12' alt="" />
+                <img src={parts} className='absolute w-[70%] border-8 border-white -right-10 -bottom-7' alt="" />
             </div>
             <div className="w-1/2">
                 <h1 className='font-bold text-primary text-2xl'>About Us</h1>
