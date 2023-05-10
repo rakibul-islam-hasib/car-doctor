@@ -8,8 +8,19 @@ import img6 from '../../../assets/images/banner/6.jpg';
 
 const Banner = () => {
     return (
-        <div className='h-[70vh]' style={{backgroundImage : `url(${img1})`}}>
-            
+        <div className='h-[70vh] bg-cover' style={{ backgroundImage: `url(${img1})` }}>
+            <div
+                style={{ background: 'linear-gradient(90deg, #151515 0%, rgba(21, 21, 21, 0) 100%)' }}
+                className="h-[70vh] items-center text-white flex">
+                <div className="w-[50%] ml-[80PX]    ">
+                    <h1 className='text-5xl font-bold'>Affordable Price For Car Servicing</h1>
+                    <p>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
+                    <div className="">
+                        <button className='bg-primary px-5 py-3 font-bold rounded-lg'>Discover More</button>
+                        <button className='border-gray-300 border text-gray-300 px-5 py-3 font-bold rounded-lg'>Latest Project</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
