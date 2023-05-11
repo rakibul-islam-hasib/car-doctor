@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProviders';
 
 const NavBar = () => {
-    const {user , logout}= useContext(AuthContext); 
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const navItems = [
         {
@@ -42,10 +42,14 @@ const NavBar = () => {
                     {
                         navItems.map(item => <li key={item.url}><Link to={item.url}>{item.label}</Link></li>)
                     }
-                    <li>{user ? <button onClick={()=> {
+                    {
+                        user && <li><Link to='/bookings' className='text-primary font-bold'>My Booking</Link></li>
+                    }
+                    <li>{user ? <button onClick={() => {
                         logout();
                         navigate('/');
-                    }} className='btn btn-ghost'>Log out</button> : <button onClick={()=>navigate('/login')} className='btn btn-ghost'>Login </button>}</li>
+                    }} className='btn btn-ghost'>Log out</button> : <button onClick={() => navigate('/login')} className='btn btn-ghost'>Login </button>}</li>
+
                 </ul>
             </div>
             <div className="navbar-end">

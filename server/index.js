@@ -61,10 +61,15 @@ async function run() {
             // console.log(search)
 
         })
-        app.get('/ordered', (req, res) => {
-            const search = req.query;
-            const cursor = orderedServicesCollection.find()
-            console.log(search)
+        app.get('/ordered',async (req, res) => {
+            const search = req.query.email;
+            let searchQuery = {} ; 
+            if (search) {
+                searchQuery = { email: search }
+            }
+            const cursor =await orderedServicesCollection.find(searchQuery).toArray(); 
+            // console.log(search)
+            res.send(cursor)
         })
 
         // Send a ping to confirm a successful connection

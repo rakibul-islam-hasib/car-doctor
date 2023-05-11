@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProviders';
-
+import Swal from 'sweetalert2'
 const Checkout = () => {
     const data = useLoaderData();
     console.log(data)
@@ -25,6 +25,13 @@ const Checkout = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
+            if (data.insertedId) {
+                Swal.fire(
+                    'Good job!',
+                    'Your Order is Placed Successfully!',
+                    'success'
+                  )
+            }
         })
         .catch(err => console.log(err))
     }
