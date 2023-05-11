@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom'
 const Services = () => {
     const [services, setServices] = useState([]);
+    const navigate = useNavigate()
     useEffect(() => {
-        fetch('https://raw.githubusercontent.com/ProgrammingHero1/car-doctor-resources/main/services.json')
+        fetch('http://localhost:5000/services')
             .then(res => res.json())
             .then(data => setServices(data))
     }, []);
@@ -24,7 +25,7 @@ const Services = () => {
                             <h2 className="card-title">{item.title}</h2>
                             <p>Price : {item.price}$</p>
                             <div className="card-actions">
-                                <button className="btn btn-primary">Buy Now</button>
+                                <button onClick={()=>navigate(`/checkout/${item._id}`)} className="btn btn-primary">Book Now</button>
                             </div>
                         </div>
                     </div>)

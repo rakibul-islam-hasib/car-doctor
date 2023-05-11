@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import NavBar from '../../headers/NavBar';
 import img from '../../../assets/images/login/login.svg';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProviders';
 import { FadeLoader } from 'react-spinners'
 const Register = () => {
-    const { createUser, loader } = useContext(AuthContext)
-
+    const { createUser, loader  , updateName , setLoader , user} = useContext(AuthContext)
+    if (user) {
+        return <Navigate to={'/'} replace></Navigate>
+    }
     const handelFormSubmit = e => {
         e.preventDefault();
         const name = e.target.name.value;
@@ -15,7 +17,11 @@ const Register = () => {
         console.log(name, email, password)
         createUser(email, password)
             .then(res => {
-                console.log(res.user)
+                // console.log(res.user)
+                updateName(name)
+                .then(()=>{})
+                .catch(err=>console.log(err))
+                setLoader(false)
             })
             .catch(err => {
                 console.log(err)

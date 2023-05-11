@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import NavBar from '../../headers/NavBar';
 import img from '../../../assets/images/login/login.svg';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProviders';
 import { FadeLoader } from 'react-spinners';
 const Login = () => {
     const { login, loader, user  , setLoader} = useContext(AuthContext)
-
+    if (user) {
+        return <Navigate to={'/'} />
+    }
     const handelFormSubmit = e => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -33,7 +35,7 @@ const Login = () => {
                         </div>
                         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                             <div className="card-body">
-                                <h1 className="text-5xl font-bold">Login now!</h1>
+                                <h1 className="text-4xl font-bold">Login now!</h1>
                                 <form onSubmit={handelFormSubmit}>
                                     <div className="form-control">
                                         <label className="label">
