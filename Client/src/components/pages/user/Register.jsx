@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NavBar from '../../headers/NavBar';
 import img from '../../../assets/images/login/login.svg';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,13 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(name, email, password)
+        // createUser(email, password)
+        // .then(res => { 
+        //     console.log(res.user)
+        // })
+        // .catch(err => { 
+        //     console.log(err)
+        // })
     }
     return (
         <div>

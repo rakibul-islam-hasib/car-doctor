@@ -5,8 +5,8 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APIKEY,
-  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  apiKey: 'AIzaSyDA9ZMIkVjNNfpoZJjgPFSF63vQ057P0Xo',
+  authDomain:'car-doctor-420.firebaseapp.com',
   projectId: "car-doctor-420",
   storageBucket: "car-doctor-420.appspot.com",
   messagingSenderId: "900046765375",
