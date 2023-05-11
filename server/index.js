@@ -55,6 +55,7 @@ async function run() {
                 phone: body.phone,
                 message: body.message,
                 date: body.date,
+                img : body.img,
             }
             const result = await orderedServicesCollection.insertOne(doc)
             res.send(result)

@@ -14,7 +14,7 @@ const Checkout = () => {
         const date  = e.target.date.value  ;
         const phone = e.target.phone.value;
         const message = e.target.message.value;
-        const bookingData = {email,name,date,phone,message};
+        const bookingData = {email,name,date,phone,message,  img : data.img};
         fetch('http://localhost:5000/ordered', {
             method: 'POST',
             headers:{
