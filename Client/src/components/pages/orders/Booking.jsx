@@ -7,6 +7,7 @@ const Booking = () => {
     document.title = 'Booking ';
     const { user } = useContext(AuthContext);
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         fetch(`http://localhost:5000/ordered?email=${user.email}`)
             .then(res => res.json())
@@ -45,8 +46,26 @@ const Booking = () => {
         })
 
     }
-    const handelConfirm = id => { 
-        
+    const handelConfirm = id => {
+        setLoading(true)
+        fetch(`http://localhost:5000/ordered/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'Approved' })
+        }).then(res => res.json())
+            .then(result => {
+                if (result.modifiedCount > 0) {
+                    fetch(`http://localhost:5000/ordered?email=${user.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            setData(data);
+                            setLoading(false)
+                        })
+                        .catch(err => {console.log(err) ; setLoading(false)})
+                }
+            })
     }
     return (
         <div className='my-10'>
@@ -71,9 +90,16 @@ const Booking = () => {
                                 data.map(item => <tr key={item._id}>
                                     {/* 1st data  */}
                                     <td>
-                                        <button onClick={() => handelDelete(item._id)} className="btn btn-sm btn-error btn-circle">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                        </button>
+                                        {
+                                            item.status ? <div className="">
+                                                <span data-tip='Your order is approved' className='tooltip tooltip-right tooltip-accent '>
+                                                    <button onClick={() => handelDelete(item._id)} className="btn btn-sm btn-primary btn-circle">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                                    </button></span>
+                                            </div> : <button onClick={() => handelDelete(item._id)} className="btn btn-sm btn-error btn-circle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                            </button>
+                                        }
                                     </td>
                                     <td>
                                         <div className="flex items-center space-x-3">
@@ -102,7 +128,11 @@ const Booking = () => {
                                     </td>
                                     <th className=''>
                                         <div className="flex">
-                                            <button onClick={()=>handelConfirm(item._id)} className="btn btn-secondary btn-xs">Pending</button>
+                                            {
+                                                loading ? <button className="btn loading btn-success btn-xs">Loading</button>
+                                                 : item.status ? <button className="btn btn-primary btn-xs">Approved</button> : <button onClick={() => handelConfirm(item._id)} className="btn btn-ghost btn-xs">Confirm</button>
+                                            }
+
                                             <button className="btn btn-ghost btn-xs">details</button>
                                         </div>
                                     </th>

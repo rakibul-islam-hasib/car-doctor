@@ -55,9 +55,9 @@ async function run() {
                 phone: body.phone,
                 message: body.message,
                 date: body.date,
-                img : body.img,
-                title : body.title,
-                price : body.price,
+                img: body.img,
+                title: body.title,
+                price: body.price,
             }
             const result = await orderedServicesCollection.insertOne(doc)
             res.send(result)
@@ -66,27 +66,37 @@ async function run() {
         })
 
         // ! GET ordered services data
-        app.get('/ordered',async (req, res) => {
+        app.get('/ordered', async (req, res) => {
             const search = req.query.email;
-            let searchQuery = {} ; 
+            let searchQuery = {};
             if (search) {
                 searchQuery = { email: search }
             }
-            const cursor =await orderedServicesCollection.find(searchQuery).toArray(); 
+            const cursor = await orderedServicesCollection.find(searchQuery).toArray();
             // console.log(search)
             res.send(cursor)
         })
 
 
         // ! Update Pending info 
-        app.patch('/ordered/:id' , async(req , res)=>{
-            
-        } )
+        app.patch('/ordered/:id', async (req, res) => {
+            const id = req.params.id;
+            const body = req.body;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const doc = {
+                $set: {
+                    status: body.status , 
+                }
+            }
+            const result = await orderedServicesCollection.updateOne(filter, doc, options)
+            res.send(result)
+        })
 
         // ! Delete ordered services data 
-        app.delete('/ordered/:id' , async (req , res)=> { 
-            const id = req.params.id ; 
-            const query = {_id : new ObjectId(id)}
+        app.delete('/ordered/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
             const result = await orderedServicesCollection.deleteOne(query)
             res.send(result)
         })
