@@ -39,13 +39,33 @@ async function run() {
             const query = { _id: new ObjectId(id) }
             const options = {
                 // Include only the `title` and `imdb` fields in the returned document
-                projection: { title: 1, price: 1 , service_id : 1  , img : 1},
+                projection: { title: 1, price: 1, service_id: 1, img: 1 },
             };
 
-            const result = await servicesCollection.findOne(query , options)
+            const result = await servicesCollection.findOne(query, options)
             res.send(result)
         })
+        // ! POST ordered services data 
+        const orderedServicesCollection = database.collection('orderedServices')
+        app.post('/ordered', async (req, res) => {
+            const body = req.body;
+            const doc = {
+                name: body.name,
+                email: body.email,
+                phone: body.phone,
+                message: body.message,
+                date: body.date,
+            }
+            const result = await orderedServicesCollection.insertOne(doc)
+            res.send(result)
+            // console.log(search)
 
+        })
+        app.get('/ordered', (req, res) => {
+            const search = req.query;
+            const cursor = orderedServicesCollection.find()
+            console.log(search)
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });

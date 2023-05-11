@@ -10,14 +10,29 @@ const Checkout = () => {
         e.preventDefault();
         // console.log(e.target)
         const email = user?.email;
-        
+        const name = user?.displayName;
         const date  = e.target.date.value  ;
+        const phone = e.target.phone.value;
+        const message = e.target.message.value;
+        const bookingData = {email,name,date,phone,message};
+        fetch('http://localhost:5000/ordered', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify(bookingData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => console.log(err))
     }
     return (
         <div className='mt-11'>
             <h1 className='text-4xl text-center my-14'>Name : <span className='text-primary font-bold'>{data.title}</span></h1>
             <div className="flex justify-center ">
-                <form  className="my-8">
+                <form  onSubmit={handelFormSubmit} className="my-8">
                     <div className="flex gap-5">
                         <div className="form-control">
                             <label className="label">
@@ -41,9 +56,9 @@ const Checkout = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text">Password</span>
+                                <span className="label-text">Phone</span>
                             </label>
-                            <input type="text" placeholder="password" className="input input-bordered" />
+                            <input type="text" required name='phone' placeholder="Phone" className="input input-bordered" />
                         </div>
                     </div>
                     <div className="">
