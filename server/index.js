@@ -64,6 +64,8 @@ async function run() {
             // console.log(search)
 
         })
+
+        // ! GET ordered services data
         app.get('/ordered',async (req, res) => {
             const search = req.query.email;
             let searchQuery = {} ; 
@@ -75,6 +77,19 @@ async function run() {
             res.send(cursor)
         })
 
+
+        // ! Update Pending info 
+        app.patch('/ordered/:id' , async(req , res)=>{
+            
+        } )
+
+        // ! Delete ordered services data 
+        app.delete('/ordered/:id' , async (req , res)=> { 
+            const id = req.params.id ; 
+            const query = {_id : new ObjectId(id)}
+            const result = await orderedServicesCollection.deleteOne(query)
+            res.send(result)
+        })
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
