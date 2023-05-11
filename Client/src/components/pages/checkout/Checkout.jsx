@@ -6,40 +6,40 @@ const Checkout = () => {
     const data = useLoaderData();
     console.log(data)
     const { user } = useContext(AuthContext);
-    const handelFormSubmit = e => { 
+    const handelFormSubmit = e => {
         e.preventDefault();
         // console.log(e.target)
         const email = user?.email;
         const name = user?.displayName;
-        const date  = e.target.date.value  ;
+        const date = e.target.date.value;
         const phone = e.target.phone.value;
         const message = e.target.message.value;
-        const bookingData = {email,name,date,phone,message,  img : data.img};
+        const bookingData = { email, name, date, phone, message, img: data.img, title: data.title , price : data.price};
         fetch('http://localhost:5000/ordered', {
             method: 'POST',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
-            }, 
+            },
             body: JSON.stringify(bookingData)
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            if (data.insertedId) {
-                Swal.fire(
-                    'Good job!',
-                    'Your Order is Placed Successfully!',
-                    'success'
-                  )
-            }
-        })
-        .catch(err => console.log(err))
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.insertedId) {
+                    Swal.fire(
+                        'Good job!',
+                        'Your Order is Placed Successfully!',
+                        'success'
+                    )
+                }
+            })
+            .catch(err => console.log(err))
     }
     return (
         <div className='mt-11'>
             <h1 className='text-4xl text-center my-14'>Name : <span className='text-primary font-bold'>{data.title}</span></h1>
             <div className="flex justify-center ">
-                <form  onSubmit={handelFormSubmit} className="my-8">
+                <form onSubmit={handelFormSubmit} className="my-8">
                     <div className="flex gap-5">
                         <div className="form-control">
                             <label className="label">

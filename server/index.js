@@ -56,6 +56,8 @@ async function run() {
                 message: body.message,
                 date: body.date,
                 img : body.img,
+                title : body.title,
+                price : body.price,
             }
             const result = await orderedServicesCollection.insertOne(doc)
             res.send(result)
