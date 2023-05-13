@@ -92,7 +92,7 @@ const Booking = () => {
                         <tbody>
                             {/* row 1 */}
                             {
-                                data.map(item => <tr key={item._id}>
+                              loading ||   data.map(item => <tr key={item._id}>
                                     {/* 1st data  */}
                                     <td>
                                         {

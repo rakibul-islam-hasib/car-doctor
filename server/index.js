@@ -32,6 +32,8 @@ const verifyJWT = (req , res , next) => {
         if (error) {
             return res.status(403).send({error : true , message : 'unauthorized access'});
         }
+        req.decoded = decoded ; 
+        next(); 
     })
 }
 
