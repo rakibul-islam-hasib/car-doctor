@@ -14,8 +14,23 @@ const Login = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         login(email, password)
-            .then(res => {
-                console.log(res.user)
+            .then(response => {
+                console.log(response.user)
+                const user = response.user ; 
+                fetch( 'http://localhost:5000/jwt' , {
+                    method : 'POST', 
+                    headers : {
+                        'content-type' : 'application/json'
+                    }, 
+                    body: JSON.stringify({
+                        email : user.email
+                    })
+                })
+                .then(res => res.json())
+                .then(data => { 
+                    console.log(data)
+                    localStorage.setItem('access_token' , data.token)
+                })
                 setLoader(false)
             })
             .catch(err => {

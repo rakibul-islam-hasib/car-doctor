@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const app = express();
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 
@@ -20,12 +21,38 @@ const client = new MongoClient(uri, {
     }
 });
 
+const verifyJWT = (req , res , next) => { 
+    // console.log('hitting verify jwt')
+    const authorization = req.headers.authorization ;
+    if (!authorization) {
+        return res.status(401).send({error : true , message : 'unauthorized access'})
+    } 
+    const token = authorization.split(' ')[1] ; 
+    jwt.verify(token , process.env.ACCESS_TOKEN , (error , decoded)=>{
+        if (error) {
+            return res.status(403).send({error : true , message : 'unauthorized access'});
+        }
+    })
+}
+
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         const database = client.db('carDB')
         const servicesCollection = database.collection('services')
+
+
+        // !* JWT management 
+        
+        app.post('/jwt' , (req , res)=>{ 
+            const body = req.body ; 
+            // console.log(body)
+            const token = jwt.sign(body , process.env.ACCESS_TOKEN , { expiresIn : '5h'})
+            // console.log(token); 
+            res.send({token});  
+        })
+
 
         //! GET services data 
         app.get('/services', async (req, res) => {
@@ -66,7 +93,7 @@ async function run() {
         })
 
         // ! GET ordered services data
-        app.get('/ordered', async (req, res) => {
+        app.get('/ordered', verifyJWT , async (req, res) => {
             const search = req.query.email;
             let searchQuery = {};
             if (search) {
@@ -117,4 +144,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`SERVER IS RUNNING ON PORT : ${port}`)
 })
-console.log(process.env.DB_USER)

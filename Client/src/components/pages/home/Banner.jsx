@@ -8,7 +8,7 @@ import img6 from '../../../assets/images/banner/6.jpg';
 
 const Banner = () => {
     return (
-        <div className='h-[70vh] bg-cover' style={{ backgroundImage: `url(${img1})` }}>
+        <div className='min-h-[70vh] bg-cover' style={{ backgroundImage: `url(${img1})` }}>
             <div
                 style={{ background: 'linear-gradient(90deg, #151515 0%, rgba(21, 21, 21, 0) 100%)' }}
                 className="h-[70vh] items-center text-white flex">

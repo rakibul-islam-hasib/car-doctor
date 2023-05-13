@@ -46,7 +46,10 @@ const NavBar = () => {
                         user && <li><Link to='/bookings' className='text-primary font-bold'>My Booking</Link></li>
                     }
                     <li>{user ? <button onClick={() => {
-                        logout();
+                        logout()
+                        .then(()=> { 
+                            localStorage.removeItem('access_token')
+                        })
                         navigate('/');
                     }} className='btn btn-ghost'>Log out</button> : <button onClick={() => navigate('/login')} className='btn btn-ghost'>Login </button>}</li>
 

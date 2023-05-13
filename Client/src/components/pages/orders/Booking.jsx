@@ -9,7 +9,12 @@ const Booking = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        fetch(`http://localhost:5000/ordered?email=${user.email}`)
+        fetch(`http://localhost:5000/ordered?email=${user.email}` , { 
+            method : 'GET', 
+            headers : {
+                authorization : `Bearer ${localStorage.getItem('access_token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => setData(data))
             .catch(err => console.log(err))
