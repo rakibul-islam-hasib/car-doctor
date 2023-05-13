@@ -6,6 +6,7 @@ import ContactHero from './ContactHero';
 import PopularProduct from './PopularProduct';
 
 const Home = () => {
+    document.title = 'Home - Car doctor '
     return (
         <div>
             <Banner /> 

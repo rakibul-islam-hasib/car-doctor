@@ -9,14 +9,18 @@ const Booking = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        fetch(`http://localhost:5000/ordered?email=${user.email}` , { 
-            method : 'GET', 
-            headers : {
-                authorization : `Bearer ${localStorage.getItem('access_token')}`
+        fetch(`http://localhost:5000/ordered?email=${user.email}`, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
         })
             .then(res => res.json())
-            .then(data => setData(data))
+            .then(data => {
+                if (!data.error) {
+                    setData(data)
+                }
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -68,7 +72,7 @@ const Booking = () => {
                             setData(data);
                             setLoading(false)
                         })
-                        .catch(err => {console.log(err) ; setLoading(false)})
+                        .catch(err => { console.log(err); setLoading(false) })
                 }
             })
     }
@@ -92,7 +96,7 @@ const Booking = () => {
                         <tbody>
                             {/* row 1 */}
                             {
-                              loading ||   data.map(item => <tr key={item._id}>
+                                loading || data.map(item => <tr key={item._id}>
                                     {/* 1st data  */}
                                     <td>
                                         {
@@ -135,7 +139,7 @@ const Booking = () => {
                                         <div className="flex">
                                             {
                                                 loading ? <button className="btn loading btn-success btn-xs">Loading</button>
-                                                 : item.status ? <button className="btn btn-primary btn-xs">Approved</button> : <button onClick={() => handelConfirm(item._id)} className="btn btn-ghost btn-xs">Confirm</button>
+                                                    : item.status ? <button className="btn btn-primary btn-xs">Approved</button> : <button onClick={() => handelConfirm(item._id)} className="btn btn-ghost btn-xs">Confirm</button>
                                             }
 
                                             <button className="btn btn-ghost btn-xs">details</button>

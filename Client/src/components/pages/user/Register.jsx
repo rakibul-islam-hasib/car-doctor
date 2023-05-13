@@ -5,6 +5,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProviders';
 import { FadeLoader } from 'react-spinners'
 const Register = () => {
+    document.title = 'Register'
     const { createUser, loader  , updateName , setLoader , user} = useContext(AuthContext)
     if (user) {
         return <Navigate to={'/'} replace></Navigate>
