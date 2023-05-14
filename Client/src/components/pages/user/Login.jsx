@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import NavBar from '../../headers/NavBar';
 import img from '../../../assets/images/login/login.svg';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProviders';
 import { FadeLoader } from 'react-spinners';
 const Login = () => {
-    const { login, loader, user  , setLoader , googleLogin} = useContext(AuthContext)
+    const location = useLocation(); 
+    const navigate = useNavigate() ;
+    let form = location.state?.from || '/'; 
+    const { login, loader, user  , setLoader , googleLogin} = useContext(AuthContext) ; 
     if (user) {
         return <Navigate to={'/'} />
     }
@@ -31,10 +34,13 @@ const Login = () => {
                     console.log(data)
                     localStorage.setItem('access_token' , data.token)
                 })
+                navigate(form)
                 setLoader(false)
+
             })
             .catch(err => {
                 console.log(err)
+                setLoader(false)
             })
     }
     const handelGoogleLogin = () => { 
@@ -52,6 +58,7 @@ const Login = () => {
             .then(data => { 
                 console.log(data)
                 localStorage.setItem('access_token' , data.token)
+                navigate(form)
             })
 
             setLoader(false)

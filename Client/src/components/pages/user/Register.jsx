@@ -6,7 +6,7 @@ import { AuthContext } from '../../../context/AuthProviders';
 import { FadeLoader } from 'react-spinners'
 const Register = () => {
     document.title = 'Register'
-    const { createUser, loader  , updateName , setLoader , user} = useContext(AuthContext)
+    const { createUser, loader  , updateName , setLoader , user , googleLogin} = useContext(AuthContext)
     if (user) {
         return <Navigate to={'/'} replace></Navigate>
     }
@@ -27,6 +27,23 @@ const Register = () => {
             .catch(err => {
                 console.log(err)
             })
+    }
+    const handelGoogleLogin = () => { 
+        googleLogin()
+        .then(result => { 
+            fetch('http://localhost:5000/jwt' , {
+                method : 'POST', 
+                headers : { 
+                    'content-type' : 'application/json'
+                },
+                body : JSON.stringify({email : result.user.email})
+            })
+            .then(res => res.json())
+            .then(data => { 
+                localStorage.setItem('access_token' , data.token)
+            })
+            setLoader(false)
+        })
     }
     return (
         loader ? <div className="h-screen flex justify-center items-center">
@@ -75,7 +92,7 @@ const Register = () => {
                                             </svg>
                                             <span className="ml-2">Facebook</span>
                                         </button>
-                                        <button className="btn btn-ghost btn-sm btn-block">
+                                        <button onClick={handelGoogleLogin} className="btn btn-ghost btn-sm btn-block">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-google" width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#ffffff" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" />
                                                 <path d="M17.788 5.108A9 9 0 1021 12h-8" />

@@ -45,10 +45,8 @@ const Booking = () => {
                                 'Your file has been deleted.',
                                 'success'
                             )
-                            fetch(`http://localhost:5000/ordered?email=${user.email}`)
-                                .then(res => res.json())
-                                .then(data => setData(data))
-                                .catch(err => console.log(err))
+                            const remaining = data.filter(item => item._id !== id);
+                            setData(remaining)
                         }
                     })
             }
@@ -66,13 +64,11 @@ const Booking = () => {
         }).then(res => res.json())
             .then(result => {
                 if (result.modifiedCount > 0) {
-                    fetch(`http://localhost:5000/ordered?email=${user.email}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            setData(data);
-                            setLoading(false)
-                        })
-                        .catch(err => { console.log(err); setLoading(false) })
+                    setLoading(false);
+                    const newData = data.find(item => item._id === id);
+                    newData.status = 'Approved';
+                    const remaining = data.filter(item => item._id !== id);
+                    setData([newData, ...remaining]);
                 }
             })
     }
